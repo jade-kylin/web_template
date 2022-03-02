@@ -1,14 +1,18 @@
 /*
  * @Author: BZNH
- * @Date: 2022-03-02 10:38:21
+ * @Date: 2022-03-02 11:05:07
  * @LastEditors: BZNH
- * @LastEditTime: 2022-03-02 10:43:09
- * @FilePath: \web_template\src\pages\page1.js
+ * @LastEditTime: 2022-03-02 11:06:27
+ * @FilePath: \web_template\src\pages\MobxTest.js
  * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import React, { Component } from 'react'
+import { observer, inject } from 'mobx-react'
 
-export class Page1 extends Component {
+@inject(['MyMobx'])
+@observer
+
+class MobxTest extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -16,18 +20,20 @@ export class Page1 extends Component {
   };
   render() {
     return (
-      <div style={{
+      <div
+      style={{
         width: '100%',
         height: window.innerHeight,
         background: '#001D37',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        flexDirection:'column'
       }}>
         <div
           onClick={() => {
             // this.props.history.push('/page2/' + 666 + '')
-            this.props.history.push({pathname:'/'}) 
+            this.props.history.push({ pathname: '/' })
             // this.props.history.push({pathname:"/page2",state : { id : '111' }});
           }}
           style={{
@@ -38,13 +44,30 @@ export class Page1 extends Component {
             borderRadius: '10px',
             lineHeight: '200px',
             textAlign: 'center',
+            cursor: 'pointer',
           }}>
-          我是页面二二二二二二
-          点我可以去页面Home
+          测试
+        </div>
+        <div
+        onClick={()=>{
+          this.props.MyMobx.addNumber()
+        }}
+        style={{
+          width: '300px',
+          height: '100px',
+          marginTop:'20px',
+          background: '#fff',
+          lineHeight:'100px',
+          textAlign:'center',
+          borderRadius:'10px',
+          cursor: 'pointer',
+        }}>
+          mobx中的数字是{this.props.MyMobx.number}&nbsp;&nbsp;&nbsp;&nbsp;
+          <div style={{display:'inline'}}>点击增加</div>
         </div>
       </div>
     )
   }
 }
 
-export default Page1
+export default MobxTest
